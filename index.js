@@ -50,6 +50,20 @@ const userSchema = new mongoose.Schema(
    const branch= mongoose.model("branch",branchSchema);
 
 
+   const masteraccountSchema= new mongoose.Schema({
+    balance:{type:Number},
+    createAt:{type:String,required: true},
+    updatedAt:{type:String,required: true},
+    // userId:{type:mongoose.Schema.Types.ObjectId,ref:"user",require:true},
+   
+   },{
+       timestamps:true,
+   });
+   
+   
+   const masteraccount= mongoose.model("masteraccount",masteraccountSchema);
+
+
   app.get(("/users"),async(req,res)=>{
     try {
 
@@ -90,6 +104,20 @@ app.post(("/branch"),async(req,res)=>{
         
     }
     
+});
+
+app.get(("/masteraccount"),async(req,res)=>{
+    try {
+
+        const userdata=await masteraccount.find({}).lean().exec();
+        return res.status(200).send(userdata);
+        
+    } catch (error) {
+
+        return res.status(500).send(error.message);
+    
+    }
+
 });
 
 
